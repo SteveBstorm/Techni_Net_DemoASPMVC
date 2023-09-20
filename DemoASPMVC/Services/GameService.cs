@@ -3,20 +3,20 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DemoASPMVC.Services
 {
-    public class GameService
+    public class GameService : IGameService
     {
         private List<Game> _games;
 
         public GameService()
         {
             _games = new List<Game>();
-            _games.Add(new Game { Id = 1, Title = "Starfield", Description = "Bugland dans l'espace", Genre = "RPG"});
-            _games.Add(new Game { Id = 2, Title = "Rocket league", Description = "Vroumvroum ballon", Genre = "Aucun"});
-            _games.Add(new Game { Id = 3, Title = "League of legend", Description = "Kikooworld pour kevin de 12ans", Genre = "Cancer"});
-            _games.Add(new Game { Id = 4, Title = "Baldur's gate 3", Description = "Le 1 était mieux", Genre = "RPG"});
+            _games.Add(new Game { Id = 1, Title = "Starfield", Description = "Bugland dans l'espace", Genre = "RPG" });
+            _games.Add(new Game { Id = 2, Title = "Rocket league", Description = "Vroumvroum ballon", Genre = "Aucun" });
+            _games.Add(new Game { Id = 3, Title = "League of legend", Description = "Kikooworld pour kevin de 12ans", Genre = "Cancer" });
+            _games.Add(new Game { Id = 4, Title = "Baldur's gate 3", Description = "Le 1 était mieux", Genre = "RPG" });
         }
 
-        public List<Game> GetGames()
+        public IEnumerable<Game> GetGames()
         {
             return _games;
         }
@@ -28,13 +28,13 @@ namespace DemoASPMVC.Services
 
         public void Create(Game game)
         {
-            game.Id = (_games.Count() > 0) ? _games.Max(g => g.Id) +1 : 1 ;
+            game.Id = (_games.Count() > 0) ? _games.Max(g => g.Id) + 1 : 1;
             _games.Add(game);
         }
 
-        public void Delete(Game game)
+        public void Delete(int id)
         {
-            _games.Remove(game);
+            _games.Remove(_games.First(x => x.Id == id));
         }
     }
 }

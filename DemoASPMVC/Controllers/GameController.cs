@@ -9,8 +9,8 @@ namespace DemoASPMVC.Controllers
         //Injection de l'instance du service via le constructeur du controller
         //GameService gameService { get; set; }
         
-        private readonly GameService gameService;
-        public GameController(GameService gs)
+        private readonly IGameService gameService;
+        public GameController(IGameService gs)
         {
             gameService = gs;
         }
@@ -40,8 +40,8 @@ namespace DemoASPMVC.Controllers
         public IActionResult Delete(int id)
         {
             //scoped => on garde l'instance durant tout le traitement de l'action Delete
-            Game game = gameService.GetById(id);
-            gameService.Delete(game);
+            //Game game = gameService.GetById(id);
+            gameService.Delete(id);
             return RedirectToAction("Index");
 
             //Transient => on crée une nouvelle instance, à chaque fois que le service est appelé

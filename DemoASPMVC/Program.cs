@@ -1,4 +1,5 @@
 using DemoASPMVC.Services;
+using System.Data.SqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,11 @@ builder.Services.AddControllersWithViews();
 // Service ré-instancier à chaque fois qu'on redémarre l'application
 
 builder.Services.AddSingleton<GameService>();
+
+builder.Services.AddTransient<SqlConnection>(pc => new SqlConnection(builder.Configuration.GetConnectionString("default")));
+
+builder.Services.AddScoped<IGameService, GameDBService>();
+//builder.Services.AddScoped<IGameService, GameService>();
 
 //Scoped => Je garde l'instance pour tout la durée d'un appel http
 // Dés qu'une nouvelle requête HTTP est produite => Service Ré-instancier

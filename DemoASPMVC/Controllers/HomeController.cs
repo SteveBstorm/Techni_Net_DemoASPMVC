@@ -14,8 +14,8 @@ namespace DemoASPMVC.Controllers
         //    _logger = logger;
         //}
 
-        private readonly GameService _gameService;
-        public HomeController(GameService gameService)
+        private readonly IGameService _gameService;
+        public HomeController(IGameService gameService)
         {
             _gameService = gameService;
         }
