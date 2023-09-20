@@ -1,4 +1,5 @@
-﻿using DemoASPMVC.Services;
+﻿using DemoASPMVC.Models;
+using DemoASPMVC.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoASPMVC.Controllers
@@ -6,9 +7,9 @@ namespace DemoASPMVC.Controllers
     public class GameController : Controller
     {
         GameService gameService { get; set; }
-        public GameController()
+        public GameController(GameService gs)
         {
-            gameService = new GameService();
+            gameService = gs;
         }
         public IActionResult Index()
         {
@@ -19,6 +20,18 @@ namespace DemoASPMVC.Controllers
         public IActionResult Details(int id)
         {
             return View(gameService.GetById(id));
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Game g)
+        {
+            gameService.Create(g);
+            return RedirectToAction("Index");
         }
     }
 }
