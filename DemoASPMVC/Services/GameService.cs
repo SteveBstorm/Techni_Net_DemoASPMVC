@@ -7,13 +7,8 @@ namespace DemoASPMVC.Services
     {
         private List<Game> _games;
 
-        
-
         public GameService()
         {
-            
-            
-
             _games = new List<Game>();
             _games.Add(new Game { Id = 1, Title = "Starfield", Description = "Bugland dans l'espace", Genre = "RPG"});
             _games.Add(new Game { Id = 2, Title = "Rocket league", Description = "Vroumvroum ballon", Genre = "Aucun"});
@@ -33,8 +28,13 @@ namespace DemoASPMVC.Services
 
         public void Create(Game game)
         {
-            game.Id = _games.Max(g => g.Id) +1;
+            game.Id = (_games.Count() > 0) ? _games.Max(g => g.Id) +1 : 1 ;
             _games.Add(game);
+        }
+
+        public void Delete(Game game)
+        {
+            _games.Remove(game);
         }
     }
 }

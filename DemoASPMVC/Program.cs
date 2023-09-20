@@ -5,7 +5,20 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+//Enregistrement des services au niveau global de l'application
+//Singleton => Garder une seule et unique instance pour la durée de vie de l'application
+// Service ré-instancier à chaque fois qu'on redémarre l'application
+
 builder.Services.AddSingleton<GameService>();
+
+//Scoped => Je garde l'instance pour tout la durée d'un appel http
+// Dés qu'une nouvelle requête HTTP est produite => Service Ré-instancier
+//builder.Services.AddScoped<GameService>();
+
+//Tansient => a chaque appel du service => nouvelle instance
+//builder.Services.AddTransient<GameService>();
+
+
 
 var app = builder.Build();
 

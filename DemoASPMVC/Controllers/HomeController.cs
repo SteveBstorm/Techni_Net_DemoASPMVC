@@ -1,4 +1,5 @@
 ﻿using DemoASPMVC.Models;
+using DemoASPMVC.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,16 +7,27 @@ namespace DemoASPMVC.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        //private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        //public HomeController(ILogger<HomeController> logger)
+        //{
+        //    _logger = logger;
+        //}
+
+        private readonly GameService _gameService;
+        public HomeController(GameService gameService)
         {
-            _logger = logger;
+            _gameService = gameService;
         }
 
         public IActionResult Index()
         {
             return View();
+        }
+
+        public IActionResult TestJeu()
+        {
+            return View(_gameService.GetGames());
         }
 
         public IActionResult Privacy()
@@ -37,10 +49,10 @@ namespace DemoASPMVC.Controllers
             return View(c);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        //public IActionResult Error()
+        //{
+        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        //}
     }
 }
