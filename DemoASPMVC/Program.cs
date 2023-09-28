@@ -1,4 +1,6 @@
 using DemoASPMVC.Services;
+using DemoASPMVC_DAL.Interface;
+using DemoASPMVC_DAL.Services;
 using System.Data.SqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +17,7 @@ builder.Services.AddSingleton<GameService>();
 builder.Services.AddTransient<SqlConnection>(pc => new SqlConnection(builder.Configuration.GetConnectionString("default")));
 
 builder.Services.AddScoped<IGameService, GameDBService>();
+builder.Services.AddScoped<IUserService, UserService>();
 //builder.Services.AddScoped<IGameService, GameService>();
 
 //Scoped => Je garde l'instance pour tout la durée d'un appel http
