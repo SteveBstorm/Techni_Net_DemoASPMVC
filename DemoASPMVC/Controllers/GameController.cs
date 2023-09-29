@@ -39,7 +39,7 @@ namespace DemoASPMVC.Controllers
             gameService.Create(g);
             return RedirectToAction("Index");
         }
-        [CustomAuthorize]
+        [AdminRequired]
         public IActionResult Delete(int id)
         {
             //scoped => on garde l'instance durant tout le traitement de l'action Delete
