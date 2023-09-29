@@ -1,4 +1,5 @@
 using DemoASPMVC.Services;
+using DemoASPMVC.Tools;
 using DemoASPMVC_DAL.Interface;
 using DemoASPMVC_DAL.Services;
 using System.Data.SqlClient;
@@ -26,7 +27,11 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 //Tansient => a chaque appel du service => nouvelle instance
 //builder.Services.AddTransient<GameService>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
 
+builder.Services.AddScoped<SessionManager>();
 
 
 var app = builder.Build();
@@ -41,6 +46,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseSession();
 
 app.UseRouting();
 

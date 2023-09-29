@@ -1,11 +1,16 @@
-﻿@model IEnumerable<DemoASPMVC.Models.Game>
-
+﻿@using DemoASPMVC.Tools;
+@model IEnumerable<DemoASPMVC.Models.Game>
+@inject SessionManager session;
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
-
+@if (session.ConnectedUser is not null)
+{
+    <p>Bonjour @session.ConnectedUser.Nickname</p>
+    
+}
 <p>
     <a asp-action="Create">Create New</a>
 </p>
