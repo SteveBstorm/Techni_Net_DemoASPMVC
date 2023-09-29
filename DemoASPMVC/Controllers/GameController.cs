@@ -1,5 +1,7 @@
 ﻿using DemoASPMVC.Models;
 using DemoASPMVC.Services;
+using DemoASPMVC.Tools;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoASPMVC.Controllers
@@ -25,6 +27,7 @@ namespace DemoASPMVC.Controllers
             return View(gameService.GetById(id));
         }
 
+        [CustomAuthorize]
         public IActionResult Create()
         {
             return View();
@@ -36,7 +39,7 @@ namespace DemoASPMVC.Controllers
             gameService.Create(g);
             return RedirectToAction("Index");
         }
-
+        [CustomAuthorize]
         public IActionResult Delete(int id)
         {
             //scoped => on garde l'instance durant tout le traitement de l'action Delete

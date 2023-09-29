@@ -13,6 +13,7 @@ builder.Services.AddControllersWithViews();
 //Singleton => Garder une seule et unique instance pour la durée de vie de l'application
 // Service ré-instancier à chaque fois qu'on redémarre l'application
 
+
 builder.Services.AddSingleton<GameService>();
 
 builder.Services.AddTransient<SqlConnection>(pc => new SqlConnection(builder.Configuration.GetConnectionString("default")));
