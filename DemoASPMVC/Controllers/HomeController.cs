@@ -1,5 +1,5 @@
 ﻿using DemoASPMVC.Models;
-using DemoASPMVC.Services;
+using DemoASPMVC_DAL.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -14,22 +14,14 @@ namespace DemoASPMVC.Controllers
         //    _logger = logger;
         //}
 
-        private readonly IGameService _gameService;
-        public HomeController(IGameService gameService)
-        {
-            _gameService = gameService;
-        }
+        
 
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult TestJeu()
-        {
-            return View(_gameService.GetGames());
-        }
-
+     
         public IActionResult Privacy()
         {
             List<string> maliste = new List<string>();

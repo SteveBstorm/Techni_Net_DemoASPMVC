@@ -1,4 +1,4 @@
-using DemoASPMVC.Services;
+
 using DemoASPMVC.Tools;
 using DemoASPMVC_DAL.Interface;
 using DemoASPMVC_DAL.Services;
@@ -14,12 +14,13 @@ builder.Services.AddControllersWithViews();
 // Service ré-instancier à chaque fois qu'on redémarre l'application
 
 
-builder.Services.AddSingleton<GameService>();
+
 
 builder.Services.AddTransient<SqlConnection>(pc => new SqlConnection(builder.Configuration.GetConnectionString("default")));
 
 builder.Services.AddScoped<IGameService, GameDBService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IGenreService, GenreService>();
 //builder.Services.AddScoped<IGameService, GameService>();
 
 //Scoped => Je garde l'instance pour tout la durée d'un appel http
