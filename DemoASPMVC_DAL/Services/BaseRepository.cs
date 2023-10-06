@@ -48,15 +48,16 @@ namespace DemoASPMVC_DAL.Services
             using (SqlConnection cnx = new SqlConnection(_connectionString))
             {
                 cnx.Open();
-                string sql = "SELECT * FROM " + tablename;
+                string sql = "SELECT * FROM " + tablename + " WHERE Id = @id";
 
                 using (SqlCommand cmd = cnx.CreateCommand())
                 {
+                    cmd.Parameters.AddWithValue("id", id);
                     cmd.CommandText = sql;
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
 
-
+                        reader.Read();  
                         return Mapper(reader);
 
                     }
