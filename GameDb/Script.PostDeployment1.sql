@@ -9,14 +9,17 @@ Modèle de script de post-déploiement
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
+INSERT INTO Genre VALUES ('Action'), ('RPG'), ('FPS'), ('Meuporg')
 
-INSERT INTO Game (Title, Description, Genre) VALUES 
-('Rocket league', 'Best jeu de foot ever', 'Action'),
-('Baldur''s Gate 3', 'Anne PC Killer', 'RPG'),
-('CS:GO', 'Pour ceux qui aime le pan pan', 'FPS'),
-('World of Warcraft', 'Best perte de temps ever', 'Meuporg')
+INSERT INTO Game (Title, Description, IdGenre) VALUES 
+('Rocket league', 'Best jeu de foot ever', 1),
+('Baldur''s Gate 3', 'Anne PC Killer', 2),
+('CS:GO', 'Pour ceux qui aime le pan pan', 3),
+('World of Warcraft', 'Best perte de temps ever', 4)
 
 EXEC UserRegister 'admin@mail.com', 'Test1234!', 'Arthur'
 EXEC UserRegister 'user@mail.com', 'Test1234!', 'Merlin'
 
 UPDATE Users SET RoleId = 3 WHERE Id = 1
+
+INSERT INTO Favoris VALUES (1, 1), (2, 1), (2, 2), (4,1)

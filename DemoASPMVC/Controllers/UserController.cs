@@ -76,5 +76,9 @@ namespace DemoASPMVC.Controllers
             return RedirectToAction("Index", "Game");
         }
 
+        public IActionResult GetById(int id)
+        {
+            return Ok(_userService.GetById("Users", id));
+        }
     }
 }

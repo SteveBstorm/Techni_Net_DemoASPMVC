@@ -15,4 +15,8 @@
     <ProjectReference Include="..\DemoASPMVC_DAL\DemoASPMVC_DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>

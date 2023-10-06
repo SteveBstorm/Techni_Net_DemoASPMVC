@@ -1,7 +1,8 @@
-﻿using DemoASPMVC.Models;
+﻿using DemoASPMVC_DAL.Interface;
+using DemoASPMVC_DAL.Models;
 using System.Data.SqlClient;
 
-namespace DemoASPMVC.Services
+namespace DemoASPMVC_DAL.Services
 {
     public class GameDBService : IGameService
     {
@@ -27,21 +28,21 @@ namespace DemoASPMVC.Services
                 Id = (int)reader["Id"],
                 Title = (string)reader["Title"],
                 Description = (string)reader["Description"],
-                Genre = (string)reader["Genre"]
+                IdGenre = (int)reader["IdGenre"]
             };
         }
 
-        
+
         public void Create(Game game)
         {
-            using(SqlCommand cmd = _connection.CreateCommand())
+            using (SqlCommand cmd = _connection.CreateCommand())
             {
-                string sql = "INSERT INTO Game (Title, Description, Genre) " +
+                string sql = "INSERT INTO Game (Title, Description, IdGenre) " +
                     "VALUES(@title, @desc, @genre)";
                 cmd.CommandText = sql;
                 cmd.Parameters.AddWithValue("title", game.Title);
                 cmd.Parameters.AddWithValue("desc", game.Description);
-                cmd.Parameters.AddWithValue("genre", game.Genre);
+                cmd.Parameters.AddWithValue("genre", game.IdGenre);
 
                 _connection.Open();
                 cmd.ExecuteNonQuery();
@@ -67,15 +68,15 @@ namespace DemoASPMVC.Services
         public Game GetById(int id)
         {
             Game game = null;
-            using(SqlCommand cmd = _connection.CreateCommand())
+            using (SqlCommand cmd = _connection.CreateCommand())
             {
                 cmd.CommandText = "SELECT * FROM Game WHERE Id = @id";
                 cmd.Parameters.AddWithValue("id", id);
 
                 _connection.Open();
-                using(SqlDataReader reader = cmd.ExecuteReader())
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    if(reader.Read()) game = Mapper(reader);
+                    if (reader.Read()) game = Mapper(reader);
                 }
                 _connection.Close();
             }
@@ -88,11 +89,11 @@ namespace DemoASPMVC.Services
             using (SqlCommand cmd = _connection.CreateCommand())
             {
                 cmd.CommandText = "SELECT * FROM Game";
-                
+
                 _connection.Open();
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    while(reader.Read())
+                    while (reader.Read())
                     {
                         game.Add(Mapper(reader));
                     }
@@ -100,6 +101,49 @@ namespace DemoASPMVC.Services
                 _connection.Close();
             }
             return game;
+        }
+
+        public IEnumerable<Game> GetByUserId(int userId)
+        {
+            List<Game> list = new List<Game>();
+
+            using (SqlCommand cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = "SELECT * FROM Game g JOIN Favoris f ON g.Id = f.IdGame " +
+                    "WHERE f.IdUser = @id";
+                cmd.Parameters.AddWithValue("id", userId);
+                _connection.Open();
+                using (SqlDataReader r = cmd.ExecuteReader())
+                {
+                    while (r.Read())
+                    {
+                        list.Add(Mapper(r));
+                    }
+                }
+                _connection.Close();
+            }
+            return list;
+
+        }
+
+        public void AddFavorite(int idUser, int idGame)
+        {
+            using(SqlCommand cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = "INSERT INTO Favoris (IdUser, IdGame) VALUES (@idu, @idg)";
+                cmd.Parameters.AddWithValue("idg", idGame);
+                cmd.Parameters.AddWithValue("idu", idUser);
+
+                _connection.Open();
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                } catch (SqlException ex)
+                {
+                    throw ex;
+                }
+                _connection.Close();
+            }
         }
     }
 }

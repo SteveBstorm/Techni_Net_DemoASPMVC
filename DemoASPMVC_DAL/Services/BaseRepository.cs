@@ -54,6 +54,7 @@ namespace DemoASPMVC_DAL.Services
                 {
                     cmd.Parameters.AddWithValue("id", id);
                     cmd.CommandText = sql;
+                    cmd.Parameters.AddWithValue("Id", id);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
 

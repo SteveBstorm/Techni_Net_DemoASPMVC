@@ -1,6 +1,6 @@
-﻿using DemoASPMVC.Models;
+﻿using DemoASPMVC_DAL.Models;
 
-namespace DemoASPMVC.Services
+namespace DemoASPMVC_DAL.Interface
 {
     public interface IGameService
     {
@@ -8,5 +8,7 @@ namespace DemoASPMVC.Services
         void Delete(int id);
         Game GetById(int id);
         IEnumerable<Game> GetGames();
+        IEnumerable<Game> GetByUserId(int userId);
+        void AddFavorite(int idUser, int idGame);
     }
 }
